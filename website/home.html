@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thumbnail Downloader</title>
+    <style>
+        body {
+            background-color: #007bff;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            padding: 30px;
+        }
+        #videoLink {
+            width: 300px;
+            height: 30px;
+            margin: 10px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        #thumbnailImg {
+            display: none;
+            margin: 20px auto;
+            max-width: 300px;
+            height: auto;
+        }
+        #downloadBtn {
+            display: none;
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="videoLink" placeholder="Enter YouTube video link">
+        <button onclick="generateThumbnail()">Generate</button>
+        <br>
+        <img id="thumbnailImg" src="" alt="Thumbnail">
+        <br>
+        <a id="downloadBtn" href="" download="thumbnail.png">Download Thumbnail</a>
+    </div>
+    <script>
+        function generateThumbnail() {
+            var videoLink = document.getElementById('videoLink').value;
+            var videoId = getVideoId(videoLink);
+            var thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+            
+            document.getElementById('thumbnailImg').src = thumbnailUrl;
+            document.getElementById('thumbnailImg').style.display = 'block';
+            document.getElementById('downloadBtn').href = thumbnailUrl;
+            document.getElementById('downloadBtn').style.display = 'block';
+        }
+
+        function getVideoId(url) {
+            var videoId = '';
+            var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\\?]*).*/;
+            var match = url.match(regExp);
+            if (match && match[2].length == 11) {
+                videoId = match[2];
+            }
+            return videoId;
+        }
+    </script>
+</body>
+</html>
